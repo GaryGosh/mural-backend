@@ -6,6 +6,7 @@ const app = express();
 dotenv.config();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const PORT = process.env.PORT || 3000;
 
@@ -23,11 +24,11 @@ app.get("/", (req, res) => {
 
 app.post("/generate", async (req, res) => {
   try {
-    const keyword = req.body;
-    console.log("key : ", keyword.keyword);
+    const { keyword } = req.body;
+    console.log("key : ", keyword);
     const response = await openai.createImage({
-      prompt: keyword.keyword,
-      n: 2,
+      prompt: keyword,
+      n: 1,
       size: "512x512",
     });
 
